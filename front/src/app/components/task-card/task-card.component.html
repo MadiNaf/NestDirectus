@@ -1,0 +1,52 @@
+<div *ngIf="task != null" class="card">
+  <div class="card-body">
+    <p>
+      <span class="badge badge-primary">#{{task.id}}</span>
+      {{task.content}} - {{task.createdOn}}
+    </p>
+  </div>
+
+  <div class="card-footer d-flex justify-content-between">
+    <div class="6">@user_name</div>
+
+    <div class="2">
+      <button
+        *ngIf="!task.todo"
+        class="btn btn-primary mr-1"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="move to Todo"
+        (click)="moveToTodo(task.id, task)">
+        <i class="bi bi-journal-x"></i>
+      </button>
+
+      <button
+        *ngIf="!task.doing"
+        class="btn btn-warning mr-1"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="move to In progress"
+        (click)="moveToInProgress(task.id, task)">
+        <i class="bi bi-hourglass-split"></i>
+      </button>
+
+      <button
+        *ngIf="!task.done"
+        class="btn btn-success mr-1"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="move to Done"
+        (click)="moveToDone(task.id, task)">
+        <i class="bi bi-trophy"></i>
+      </button>
+      <button
+        class="btn btn-danger"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="delete task"
+        (click)="deleteTask(task.id)">
+        <i class="bi bi-trash"></i>
+      </button>
+    </div>
+  </div>
+</div>

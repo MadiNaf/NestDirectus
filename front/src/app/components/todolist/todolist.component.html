@@ -1,0 +1,65 @@
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- section todo -->
+    <div class="col-4">
+      <div class="card" >
+        <div class="card-header">
+          <i class="bi bi-journal-x mr-3"></i> Todo
+        </div>
+        <div class="card-body">
+          <div *ngFor="let task of todolist" class="mb-2">
+            <app-task-card *ngIf="task.todo" [task]="task"></app-task-card>
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="form-group">
+              <label for="newTask">Create a new task</label>
+              <textarea name="newTaskContent" [(ngModel)]="newTaskContent" class="form-control" id="newTask" rows="3">
+                {{newTaskContent}}
+              </textarea>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-info" (click)="addTask(newTaskContent)">
+                <i class="bi bi-pencil-square mr-2"></i>
+                Create task
+              </button>
+            </div>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- section in progress -->
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <i class="bi bi-hourglass-split mr-3"></i> In progress
+        </div>
+        <div class="card-body">
+          <div *ngFor="let task of todolist" class="mb-2">
+            <app-task-card *ngIf="task.doing" [task]="task"></app-task-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- section done -->
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <i class="bi bi-trophy mr-3"></i> Done
+        </div>
+        <div class="card-body">
+          <div *ngFor="let task of todolist" class="mb-2">
+            <app-task-card *ngIf="task.done" [task]="task"></app-task-card>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
