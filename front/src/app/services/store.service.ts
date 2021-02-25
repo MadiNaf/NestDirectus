@@ -39,6 +39,7 @@ export class StoreService {
   public signIn(logins: LoginsModel): Observable<any> {
     return this.http.post(this.baseUrlApi + 'user/signin', logins)
       .pipe( map( (response: any) => {
+        console.log('user: ', response)
         return this.UTILS.buildUser(response);
       }));
   }

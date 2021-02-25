@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {TodolistService} from "../../services/todolist.service";
-import {TaskModel} from "../../model/task.model";
-import {newArray} from "@angular/compiler/src/util";
+import {TodolistService} from '../../services/todolist.service';
+import {TaskModel} from '../../model/task.model';
+import {UserModel} from '../../model/user.model';
+import {StoreService} from '../../services/store.service';
 
 @Component({
   selector: 'app-todolist',
@@ -12,20 +13,18 @@ export class TodolistComponent implements OnInit {
 
   public newTaskContent: string = '';
   public todolist: Array<TaskModel> = new Array<TaskModel>();
+  public user: UserModel = new UserModel();
 
-  constructor(private todolistService: TodolistService) { }
+  constructor(private todolistService: TodolistService, private storeService: StoreService) { }
 
   ngOnInit(): void {
-    this.todolistService.directusAuthentification();
-    this.todolistService.getAllTasks().subscribe( value => {
-      let taskList: TaskModel[] = new Array<TaskModel>();
-      value.forEach((item: any) => {
-        taskList.push(this.formtToTaskModel(item))
-
-      })
-      this.todolistService.setTodolist(taskList);
-    });
+    this.storeService.currentUser.subscribe( currentUser => this.user = currentUser);
     this.getTodolist();
+  }
+
+  public getTodolist(): void{
+    this.todolistService.currentTodolist
+      .subscribe(todolist => this.todolist = todolist);
   }
 
   addTask(taskContent: string): void{
@@ -34,6 +33,7 @@ export class TodolistComponent implements OnInit {
       id: 0,
       content: taskContent,
       createdOn: '',
+      updatedOn: '',
       todo: true,
       doing: false,
       done: false
@@ -43,16 +43,12 @@ export class TodolistComponent implements OnInit {
     this.todolistService.createTask(task)
   }
 
-  getTodolist(): void{
-    this.todolistService.currentTodolist
-      .subscribe(todolist => this.todolist = todolist);
-  }
-
   formtToTaskModel(item: any): TaskModel {
     return {
       id: item.id,
       content: item.content,
       createdOn: item.createdOn,
+      updatedOn: item.updatedOn,
       todo: item.todo,
       doing: item.doing,
       done: item.done

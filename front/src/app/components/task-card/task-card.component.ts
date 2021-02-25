@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {TaskModel} from "../../model/task.model";
-import {TodolistService} from "../../services/todolist.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { TaskModel } from '../../model/task.model';
+import { TodolistService } from '../../services/todolist.service';
+import { UserModel } from '../../model/user.model';
 
 @Component({
   selector: 'app-task-card',
@@ -11,6 +12,9 @@ export class TaskCardComponent implements OnInit {
 
   @Input()
   public task: TaskModel | null = null;
+
+  @Input()
+  public user: UserModel = new UserModel();
 
   constructor(private todolistService: TodolistService) { }
 
