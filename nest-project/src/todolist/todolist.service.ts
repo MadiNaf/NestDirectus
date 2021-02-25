@@ -67,10 +67,9 @@ export class TodolistService {
     }
 
     public async findTodolistById(queryParams: QueryParams): Promise<Array<TaskModel>> {
-
         let taskModelTab: Array<TaskModel> = new Array<TaskModel>();
-
         let idsTab: Array<number> = []
+
         queryParams.ids.split(',').forEach( id => {
             idsTab.push(parseInt(id));
         })
