@@ -6,29 +6,40 @@ import { LoginModel } from "../model/user/login.model";
 
 @Injectable()
 export class UserService {
-    public async signUp(user: UserModel): Promise<UserModel> {
-        let retour: UserModel = new UserModel();
 
+    public async signUp(user: UserModel): Promise<LoginModel> {
+        let retour: LoginModel = new LoginModel();
         if(this.isValidUser(user)) {
+            await this.directusAuth();
             user.role = '9f2ea142-b027-4d19-9a8e-5fc82175cc37'
             await directus.users.create(user)
                 .then(response => {
-                    console.log('response: ', response);
-                    retour = this.buildUser(response.data)
+                    retour = { email: response.data.email, password: '***'}
                 })
                 .catch(error => console.log('sign up err: ', error))
         }
         return retour;
     }
 
-    public async signIn(loginModel: LoginModel): Promise<string> {
+    public async signIn(loginModel: LoginModel): Promise<UserModel> {
+        let user: UserModel = new UserModel();
+
         if(this.isValidUser(loginModel)) {
             return await directus.auth.login({email: loginModel.email, password: loginModel.password})
                 .then( async (response) => {
                     console.log('response: ', response.data.expires)
                     directus.auth.token = response.data.access_token;
 
-                    return response.data.access_token;
+                    await this.getUserByEmail(loginModel.email)
+                        .then((response: any) => {
+                            if(response.data[0]) {
+                               user = this.buildUser(response.data[0]);
+                            }
+                            return user;
+                        })
+                        .catch(error => console.log('get user err: ', error))
+                    return user;
+
                 })
                 .catch(error => console.log('sign in err: ', error))
         }
@@ -74,7 +85,7 @@ export class UserService {
             last_name: data.last_name,
             email: data.email,
             password: data.password,
-            role: data.role,
+            role: '',
             token: data.token,
             avatar: data.avatar,
             description: data.description,
@@ -84,21 +95,24 @@ export class UserService {
         }
     }
 
-    async getUserByEmail(email: string, token: string) {
-        const query = { filter: { email: {_eq: email} }};
-        const payload = { token: token };
-        console.log('pld: ', payload)
-        await directus.users.read(query)
-            .then( async (response) => {
-                await this.updateUserToken(response.data[0].id, payload)
-                console.log('id: ', response.data[0].id)
-            })
-            .catch(error => console.log('error get user'))
+    async directusAuth(): Promise<any> {
+        await directus.auth.login({email: 'madi@dev.fr', password: 'M@d!976'})
+            .then( response => {
+                console.log('auth: ', response.data)
+            }
+        )
     }
 
+    async getUserByEmail(email: string): Promise<Object>{
+        const query = { filter: { email: {_eq: email} }};
+        return await directus.users.read(query)
+    }
+
+    /**
     async updateUserToken(idUser: string, payload: any) {
         await directus.users.update(idUser, payload)
             .then(response => console.log('token updated: ', response))
             .catch(error => console.log('ERROR_USER_TOKEN: ', error))
     }
+     */
 }

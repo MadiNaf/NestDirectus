@@ -1,0 +1,97 @@
+<div *ngIf="isSignupFail" class="alert alert-danger mt-5" role="alert">
+  🧐 Check that all information is correct!
+</div>
+<div *ngIf="!isSignup" class="row mt-5">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header"> Sign Up </div>
+      <div class="card-body">
+        <form>
+          <div class="row mb-3">
+            <div class="col-6">
+              <label for="firstName">Enter your first name</label>
+              <input
+                type="text"
+                [class]="firstNameCssClass"
+                id="firstName"
+                name="firstName"
+                maxlength="40"
+                [(ngModel)]="firstName"
+                (change)="onFirstNameChange(firstName)"
+              >
+            </div>
+            <div class="col-6">
+              <label for="lastName">Enter your last name</label>
+              <input
+                type="text"
+                [class]="lastNameCssClass"
+                id="lastName"
+                name="lastName"
+                maxlength="40"
+                [(ngModel)]="lastName"
+                (change)="onLastNameChange(lastName)"
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signUpEmail">Enter your email</label>
+            <input
+              type="email"
+              [class]="emailCssClass"
+              id="signUpEmail"
+              name="signUpEmail"
+              aria-describedby="email"
+              maxlength="60"
+              [(ngModel)]="signUpEmail"
+              (keyup)="onEmailChange(signUpEmail)"
+            >
+          </div>
+          <div class="form-group">
+            <label for="signUpPassword">Enter your password</label>
+            <input
+              type="password"
+              [class]="pwdCssClass"
+              name="signUpPassword"
+              id="signUpPassword"
+              maxlength="80"
+              [(ngModel)]="signUpPassword"
+              (keyup)="onPasswordChange(signUpPassword)"
+            >
+          </div>
+          <div class="form-group">
+            <label for="passwordConfirmation">Confirm your password</label>
+            <input
+              type="password"
+              [class]="pwdConfirmationCssClass"
+              name="passwordConfirmation"
+              id="passwordConfirmation"
+              maxlength="80"
+              [(ngModel)]="passwordConfirmation"
+              (change)="onPasswordConfirmation(passwordConfirmation)"
+            >
+          </div>
+          <button
+            type="submit"
+            class="btn btn-info"
+            (click)="onSignUp()">Create my account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- sign up with success -->
+<div *ngIf="isSignupSuccess" class="alert alert-success mt-5" role="alert">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-center">
+      <h4 class="alert-heading">🎉 Well done, your account has successfully created! 🎉</h4>
+    </div>
+  </div>
+  <hr>
+  <p class="mb-0">Go to the <span class="alert-link">I have an account</span> tab to access your account.</p>
+</div>
+
+<!-- sign up fail -->
+<!--
+    <h4 class="alert-heading">🧐 looks like we have a little problem here!</h4>
+-->

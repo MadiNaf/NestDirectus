@@ -1,4 +1,4 @@
-import { Body, Controller , Delete, Get, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
 import { TodolistService } from './todolist.service';
 import { TaskModel } from '../model/task.model';
 
@@ -26,5 +26,10 @@ export class TodolistController {
     @Delete('delete/:id')
     deleteTask(@Param('id') id: string): string {
         return this.todolistService.deleteTask(id);
+    }
+
+    @Get('task')
+    findById(@Query() query): Promise<any> {
+        return this.todolistService.findTodolistById(query);
     }
 }

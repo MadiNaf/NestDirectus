@@ -1,72 +1,46 @@
 <div class="container">
-  <!-- Sign In -->
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header"> Sign In </div>
-        <div class="card-body">
-          <form>
-            <div class="form-group">
-              <label for="signInUsername">UserModel name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="signInUsername"
-                aria-describedby="emailHelp"
-                placeholder="Enter user name"
-              >
-            </div>
-            <div class="form-group">
-              <label for="signInPassword">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="signInPassword"
-                placeholder="signInPassword">
-            </div>
-            <button type="submit" class="btn btn-info">Sign In</button>
-          </form>
-        </div>
-    </div>
-    </div>
-  </div>
-    <!-- Sign Up -->
-    <div class="row mt-5">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header"> Sign Up </div>
-          <div class="card-body">
-            <form>
-              <div class="form-group">
-                <label for="signUpUsername">UserModel name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="signUpUsername"
-                  aria-describedby="username"
-                  placeholder="Enter user name"
-                >
-              </div>
-              <div class="form-group">
-                <label for="signUpPassword">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="signUpPassword"
-                  placeholder="Password">
-              </div>
-              <div class="form-group">
-                <label for="signUpPasswordConfirmation">Password confirmation</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="signUpPasswordConfirmation"
-                  placeholder="Password confirmation">
-              </div>
-              <button type="submit" class="btn btn-info">Sign Up</button>
-            </form>
-          </div>
-        </div>
+    <!-- Authentification -->
+    <nav>
+      <!-- tabs section -->
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a
+          class="nav-item nav-link active"
+          id="nav-signup-tab"
+          data-toggle="tab"
+          href="#nav-signup"
+          role="tab"
+          aria-controls="nav-signup"
+          aria-selected="true"
+        >Create an account</a>
+
+        <a
+          class="nav-item nav-link"
+          id="nav-signin-tab"
+          data-toggle="tab"
+          href="#nav-signin"
+          role="tab"
+          aria-controls="nav-signin"
+          aria-selected="false"
+        >I have an account</a>
+      </div>
+    </nav>
+  <!-- tabs content -->
+    <div class="tab-content" id="nav-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="nav-signup"
+        role="tabpanel"
+        aria-labelledby="nav-signup-tab"
+      >
+        <app-signup></app-signup>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="nav-signin"
+        role="tabpanel"
+        aria-labelledby="nav-signin-tab"
+      >
+        <app-signin></app-signin>
       </div>
     </div>
 </div>

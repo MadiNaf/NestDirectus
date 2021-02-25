@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { directus } from '../main';
-import { TaskModel } from "../model/task.model";
+import { TaskModel, QueryParams } from "../model/task.model";
 
 @Injectable()
 export class TodolistService {
@@ -64,5 +64,26 @@ export class TodolistService {
             task: task.content,
             status: task.todo ? '1' : task.doing ? '2' : '3'
         };
+    }
+
+    public async findTodolistById(queryParams: QueryParams): Promise<Array<TaskModel>> {
+
+        let taskModelTab: Array<TaskModel> = new Array<TaskModel>();
+
+        let idsTab: Array<number> = []
+        queryParams.ids.split(',').forEach( id => {
+            idsTab.push(parseInt(id));
+        })
+
+        const query = { filter: { id: { _in: idsTab }   } };
+        await directus.items('todolist').read(query)
+            .then( response => {
+                response.data.forEach(task => {
+                    taskModelTab.push(this.buildTasks(task));
+                });
+            })
+           .catch( error => console.log('error: ', error))
+
+        return taskModelTab;
     }
 }

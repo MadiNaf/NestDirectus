@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { StoreService } from '../../services/store.service';
+import {UserModel} from "../../model/user.model";
 
 @Component({
   selector: 'app-board',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
-  constructor() { }
+  public user: UserModel = new UserModel();
+
+  constructor(private storeService: StoreService ) { }
 
   ngOnInit(): void {
+    this.storeService.currentUser.subscribe( response => this.user = response)
   }
 
 }

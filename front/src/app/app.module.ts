@@ -10,6 +10,8 @@ import { TaskCardComponent } from './components/task-card/task-card.component';
 import {FormsModule} from "@angular/forms";
 import { BoardComponent } from './components/board/board.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { SigninComponent } from './components/signin/signin.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { AuthComponent } from './components/auth/auth.component';
     TodolistComponent,
     TaskCardComponent,
     BoardComponent,
-    AuthComponent
+    AuthComponent,
+    SigninComponent,
+    SignupComponent
   ],
     imports: [
         BrowserModule,

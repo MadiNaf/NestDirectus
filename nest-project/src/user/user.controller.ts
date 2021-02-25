@@ -8,12 +8,12 @@ export class UserController {
     constructor(private userService: UserService) {}
 
     @Post('signup')
-    signUp(@Body() user: UserModel): Promise<UserModel> {
+    signUp(@Body() user: UserModel): Promise<LoginModel> {
         return this.userService.signUp(user)
     }
 
     @Post('signin')
-    signIn(@Body()userLogin: LoginModel): Promise<string>{
+    signIn(@Body()userLogin: LoginModel): Promise<UserModel>{
         return this.userService.signIn(userLogin)
     }
 

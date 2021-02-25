@@ -20,3 +20,8 @@ export class TaskModel {
     }
 
 }
+
+export class QueryParams {
+    /** task id */
+    ids: string;
+}

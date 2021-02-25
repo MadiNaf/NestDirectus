@@ -1,0 +1,40 @@
+<!-- Sign In -->
+<div class="row  mt-5">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header"> Sign In </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="signInEmail">Enter your email</label>
+            <input
+              type="text"
+              [class]="emailCssClass"
+              id="signInEmail"
+              name="signInEmail"
+              aria-describedby="emailHelp"
+              maxlength="25"
+              [(ngModel)]="signInEmail"
+              (keyup)="onEmailChange(signInEmail)"
+            >
+            <div class="invalid-feedback">Your email is invalid</div>
+          </div>
+          <div class="form-group">
+            <label for="signInPassword">Enter your password</label>
+            <input
+              type="password"
+              [class]="pwdCssClass"
+              id="signInPassword"
+              name="signInPassword"
+              maxlength="25"
+              [(ngModel)]="signInPassword"
+              (keyup)="onPasswordChange(signInPassword)"
+            >
+            <div class="invalid-feedback">Your password is invalid</div>
+          </div>
+          <button type="submit" class="btn btn-info" (click)="onSignIn()">Connection</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
