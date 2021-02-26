@@ -20,8 +20,8 @@ export class TodolistService {
     }
 
     async createTask(task: TaskModel): Promise<TaskModel> {
-        const payload = this.creaTasktPayload(task)
-        let createdTask = new TaskModel()
+        const payload = this.creaTasktPayload(task);
+        let createdTask = new TaskModel();
         await directus.items('todolist').create(payload)
             .then( value => {
                 createdTask = this.buildTasks(value.data);
@@ -49,12 +49,14 @@ export class TodolistService {
 
     buildTasks(dataItem: any): TaskModel {
         let task: TaskModel = new TaskModel();
-        task.id = dataItem.id
-        task.content = dataItem.task
-        task.setStatus(dataItem.status)
+        task.id = dataItem.id;
+        task.content = dataItem.task;
+        task.setStatus(dataItem.status);
 
-        task.createdOn = dataItem.date_created
-        task.updatedOn = dataItem.date_updated
+        task.createdOn = dataItem.date_created;
+        task.updatedOn = dataItem.date_updated;
+        task.userId = dataItem.id_user;
+        task.boardId = dataItem.id_board;
 
         return task;
     }
@@ -62,7 +64,9 @@ export class TodolistService {
     creaTasktPayload(task: TaskModel) {
         return {
             task: task.content,
-            status: task.todo ? '1' : task.doing ? '2' : '3'
+            status: task.todo ? '1' : task.doing ? '2' : '3',
+            id_user: task.userId,
+            id_board: task.boardId
         };
     }
 
@@ -81,8 +85,7 @@ export class TodolistService {
                     taskModelTab.push(this.buildTasks(task));
                 });
             })
-           .catch( error => console.log('error: ', error))
-
+           .catch( error => console.log('error: ', error));
         return taskModelTab;
     }
 }

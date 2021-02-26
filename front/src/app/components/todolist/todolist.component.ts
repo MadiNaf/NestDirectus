@@ -36,7 +36,8 @@ export class TodolistComponent implements OnInit {
       updatedOn: '',
       todo: true,
       doing: false,
-      done: false
+      done: false,
+      userId: ''
     }
 
     this.newTaskContent = '';
@@ -51,7 +52,8 @@ export class TodolistComponent implements OnInit {
       updatedOn: item.updatedOn,
       todo: item.todo,
       doing: item.doing,
-      done: item.done
+      done: item.done,
+      userId: item.userId
     }
   }
 }

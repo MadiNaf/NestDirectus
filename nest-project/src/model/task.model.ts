@@ -5,6 +5,9 @@ export class TaskModel {
     id: number;
     content: string;
     status: string;
+    userId: string = '';
+    boardId: string = '';
+
 
     todo: boolean;
     doing: boolean;

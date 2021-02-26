@@ -85,7 +85,8 @@ export class TodolistService {
       doing: response.doing,
       done: response.done,
       createdOn: response.createdOn,
-      updatedOn: response.updatedOn
+      updatedOn: response.updatedOn,
+      userId: response.userId
     }
   }
 }

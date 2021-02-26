@@ -6,4 +6,5 @@ export class TaskModel {
   todo: boolean = false;
   doing: boolean = false;
   done: boolean = false;
+  userId: string = "";
 }
