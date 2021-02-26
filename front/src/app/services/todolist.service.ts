@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {TaskModel} from "../model/task.model";
-import {map} from "rxjs/operators";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { TaskModel } from '../model/task.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodolistService {
+  private readonly baseUrlApi: string = 'http://localhost:3000/';
 
   private todolistSource = new BehaviorSubject(new Array<TaskModel>());
   currentTodolist = this.todolistSource.asObservable();
 
+  public ids: Array<number> = [];
+
   constructor(private http: HttpClient) { }
-
-  private baseUrlApi: string = 'http://localhost:3000/';
-
-  public directusAuthentification(): void {
-    this.http.get(this.baseUrlApi + 'directus/auth').subscribe();
-  }
 
   getAllTasks(): Observable<any> {
     return  this.http.get(this.baseUrlApi + 'todolist/all')
@@ -27,7 +24,12 @@ export class TodolistService {
     }));
   }
 
-  getTaskByUserId(): void {}
+  public findTaskById(ids: Array<number>): Observable<any> {
+    return  this.http.get( `${this.baseUrlApi}todolist/task?ids=${ids.join()}`)
+      .pipe( map(value => {
+        return value;
+      }));
+  }
 
   public setTodolist(newTodolist: Array<TaskModel>): void{
     this.todolistSource.next(newTodolist)
@@ -62,6 +64,13 @@ export class TodolistService {
       });
   }
 
+  public getBardByUserId(userId: string): Observable<any> {
+    return this.http.get(this.baseUrlApi + 'board/' + userId)
+      .pipe( map( response => {
+        return response
+      }));
+  }
+
   public addTaskInTodolistArray(task: TaskModel, taskModelArray: Array<TaskModel>): Array<TaskModel>{
     let newTodolist = taskModelArray;
     newTodolist.push(task);
@@ -75,7 +84,8 @@ export class TodolistService {
       todo: response.todo,
       doing: response.doing,
       done: response.done,
-      createdOn: response.createdOn
+      createdOn: response.createdOn,
+      updatedOn: response.updatedOn
     }
   }
 }

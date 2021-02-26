@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
           <div *ngFor="let task of todolist" class="mb-2">
-            <app-task-card *ngIf="task.todo" [task]="task"></app-task-card>
+            <app-task-card *ngIf="task.todo" [task]="task" [user]="user"></app-task-card>
           </div>
         </div>
         <ul class="list-group list-group-flush">
@@ -41,7 +41,7 @@
         </div>
         <div class="card-body">
           <div *ngFor="let task of todolist" class="mb-2">
-            <app-task-card *ngIf="task.doing" [task]="task"></app-task-card>
+            <app-task-card *ngIf="task.doing" [task]="task" [user]="user"></app-task-card>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
         </div>
         <div class="card-body">
           <div *ngFor="let task of todolist" class="mb-2">
-            <app-task-card *ngIf="task.done" [task]="task"></app-task-card>
+            <app-task-card *ngIf="task.done" [task]="task" [user]="user"></app-task-card>
           </div>
         </div>
       </div>
