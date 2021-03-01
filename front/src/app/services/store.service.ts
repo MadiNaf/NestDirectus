@@ -17,8 +17,8 @@ export class StoreService {
   public userSource = new BehaviorSubject(new UserModel());
   currentUser = this.userSource.asObservable();
 
-  public session = new BehaviorSubject(false);
-  currentSession = this.session.asObservable();
+  public sessionSource = new BehaviorSubject(false);
+  currentSession = this.sessionSource.asObservable();
 
   public signUpState = new BehaviorSubject(false);
   currentSignUpState = this.signUpState.asObservable();
@@ -53,7 +53,7 @@ export class StoreService {
       });
   }
 /*****************************************************************\
- *                        user handler
+ *                  getter and setter
  *****************************************************************/
   public setSession(user: UserModel): boolean {
     return this.UTILS.isValidEmail(user.email) && this.UTILS.isValidUserId(user.id);
@@ -66,5 +66,9 @@ export class StoreService {
   public setUser(user: UserModel) {
     this.userSource.next(user)
   }
+
+ /* public get session(): boolean{
+    return true
+  }*/
 
 }

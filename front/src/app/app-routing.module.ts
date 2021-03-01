@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthComponent } from "./components/auth/auth.component";
-import { BoardComponent } from "./components/board/board.component";
-import { TodolistComponent } from "./components/todolist/todolist.component";
+import { HomeComponent } from './components/home/home.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { BoardComponent } from './components/board/board.component';
+import { TodolistComponent } from './components/todolist/todolist.component';
 
 export const routes: Routes = [
-  { path: '', component: AuthComponent },
+  { path: '', component: HomeComponent},
   { path: 'auth', component: AuthComponent },
   { path: 'board', component: BoardComponent },
   { path: 'todolist', component: TodolistComponent}

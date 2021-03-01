@@ -10,7 +10,7 @@ export class UserService {
     public async signUp(user: UserModel): Promise<LoginModel> {
         let retour: LoginModel = new LoginModel();
         if(this.isValidUser(user)) {
-            await this.directusAuth();
+            // await this.directusAuth();
             user.role = '9f2ea142-b027-4d19-9a8e-5fc82175cc37'
             await directus.users.create(user)
                 .then(response => {
@@ -95,13 +95,15 @@ export class UserService {
         }
     }
 
-    async directusAuth(): Promise<any> {
+  /*  async directusAuth(): Promise<any> {
         await directus.auth.login({email: 'madi@dev.fr', password: 'M@d!976'})
             .then( response => {
                 console.log('auth: ', response.data)
-            }
-        )
-    }
+            })
+            .catch( error => {
+                console.log('err auth dtcs: ', error)
+            })
+    }*/
 
     async getUserByEmail(email: string): Promise<Object>{
         const query = { filter: { email: {_eq: email} }};

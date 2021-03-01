@@ -39,15 +39,17 @@ export class SignupComponent implements OnInit {
 
   public onSignUp() {
     if(this.isSignupFormValid()) {
-      /*let user: UserModel = this.UTILS
+      let user: UserModel = this.UTILS
         .createUser(this.firstName, this.lastName, this.signUpEmail, this.signUpPassword);
+
+      console.log('new user: ', user);
 
       this.storeService.signUp(user).subscribe( value => {
         console.log('signup_onSignUp: ', value)
         if(this.UTILS.isValidEmail(value.email)) {
           this.storeService.setSignUpState(true);
         }
-      })*/
+      });
       this.storeService.setSignUpState(true);
       this.isSignupSuccess = true;
       this.isSignupFail = !this.isSignupSuccess;
