@@ -19,8 +19,11 @@
         <a class="nav-link" routerLink="/board">Dashboard</a>
       </li>
     </ul>
-    <a *ngIf="isSignUp" class="navbar-text" routerLink="/auth">
+    <a *ngIf="signUp || !session" class="navbar-text" routerLink="/auth">
       Get an account
+    </a>
+    <a  *ngIf="session" class="navbar-text">
+      Log out
     </a>
   </div>
 </nav>

@@ -39,7 +39,6 @@ export class StoreService {
   public signIn(logins: LoginsModel): Observable<any> {
     return this.http.post(this.baseUrlApi + 'user/signin', logins)
       .pipe( map( (response: any) => {
-        console.log('user: ', response)
         return this.UTILS.buildUser(response);
       }));
   }
@@ -47,16 +46,14 @@ export class StoreService {
   public logOut(task: TaskModel): void {
     this.http.post(this.baseUrlApi + '', task)
       .subscribe((response: any) => {
-
         console.log('post_res: ', response);
-
       });
   }
 /*****************************************************************\
  *                  getter and setter
  *****************************************************************/
-  public setSession(user: UserModel): boolean {
-    return this.UTILS.isValidEmail(user.email) && this.UTILS.isValidUserId(user.id);
+  public setSession(user: UserModel): void {
+  this.sessionSource.next(this.UTILS.isValidEmail(user.email) && this.UTILS.isValidUserId(user.id));
   }
 
   public setSignUpState(isSignUp: boolean): void{
@@ -66,9 +63,4 @@ export class StoreService {
   public setUser(user: UserModel) {
     this.userSource.next(user)
   }
-
- /* public get session(): boolean{
-    return true
-  }*/
-
 }

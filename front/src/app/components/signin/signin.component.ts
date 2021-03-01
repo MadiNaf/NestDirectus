@@ -35,12 +35,11 @@ export class SigninComponent implements OnInit {
 
   public onSignIn(): void{
     let logins: LoginsModel = this.createLogins();
-    console.log('login: ', logins);
     if(this.isSigninFormValid()) {
       this.storeService.signIn(logins).subscribe( (user: UserModel) => {
-        console.log('user: ', user);
         this.storeService.setUser(user);
-        this.router.navigate(['board']).then(r => console.log('navigate: ', r));
+        this.storeService.setSession(user);
+        this.router.navigate(['board']).then(r => console.log('navigate to board: ', r));
       })
     } else {
 

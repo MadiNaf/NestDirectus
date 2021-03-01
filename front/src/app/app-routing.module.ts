@@ -6,10 +6,11 @@ import { BoardComponent } from './components/board/board.component';
 import { TodolistComponent } from './components/todolist/todolist.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent},
+  { path: 'home', component: HomeComponent},
   { path: 'auth', component: AuthComponent },
   { path: 'board', component: BoardComponent },
-  { path: 'todolist', component: TodolistComponent}
+  { path: 'todolist', component: TodolistComponent},
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -17,5 +18,4 @@ export const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {
-
 }

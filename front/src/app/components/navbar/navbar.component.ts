@@ -7,16 +7,23 @@ import {StoreService} from "../../services/store.service";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  public session: boolean = false;
+  public signUp: boolean = false;
 
   constructor(private storeService: StoreService) { }
 
   ngOnInit(): void {
+    this.getSession();
+    this.isSignUp();
   }
 
-  public isSignUp(): boolean {
-    let state: boolean = false
-    console.log('state: ', state);
-    this.storeService.currentSignUpState.subscribe(value => state = value);
-    return state;
+  public isSignUp(): void {
+    this.storeService.currentSignUpState.subscribe(value => this.signUp = value);
+    console.log('signupResp: ', this.signUp)
+  }
+
+  public getSession(): void {
+    this.storeService.currentSession.subscribe(session => this.session = session);
+    console.log('sessionResp: ', this.session);
   }
 }
