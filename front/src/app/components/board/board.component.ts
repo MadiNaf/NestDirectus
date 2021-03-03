@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { StoreService } from '../../services/store.service';
 import { UserModel } from '../../model/user.model';
 import { TodolistService } from '../../services/todolist.service';
-import { BoradModel } from '../../model/borad.model';
+import { BoardModel } from '../../model/board.model';
 import { TaskModel } from '../../model/task.model';
 import { Router } from '@angular/router';
+import { UtilsTool } from '../../utils/utils-tool';
 
 @Component({
   selector: 'app-board',
@@ -13,9 +14,18 @@ import { Router } from '@angular/router';
 })
 export class BoardComponent implements OnInit {
 
+  public readonly UTILS: UtilsTool = new UtilsTool();
+  public readonly DEFAULT_CLASS: string = 'form-control';
+
   public user: UserModel = new UserModel();
-  public board: BoradModel = new BoradModel();
+  public board: BoardModel = new BoardModel();
   public userTodolist: Array<TaskModel> = new Array<TaskModel>();
+  public hasBoard: boolean = false;
+
+  public boardTitle: string = '';
+  public boardDescription: string = '';
+  public titleCssClass: string = this.DEFAULT_CLASS;
+  public descriptionCssClass: string = this.DEFAULT_CLASS;
 
   constructor(
     private storeService: StoreService,
@@ -26,8 +36,15 @@ export class BoardComponent implements OnInit {
     this.hasSession();
     this.storeService.currentUser.subscribe( response => this.user = response)
     this.todolistService.getBoardByUserId(this.user.id).subscribe(value => {
-      value.forEach((board: BoradModel) => this.board = board);
-      this.getUserTodolist(this.board.id_todolist);
+      if (value.length){
+        this.hasBoard = true;
+        value.forEach((board: BoardModel) => this.board = board);
+        this.getUserTodolist(this.board.id_todolist);
+        this.storeService.setUserBoardId(this.board.id)
+      } else {
+        this.hasBoard = false;
+      }
+
     })
   }
 
@@ -44,5 +61,56 @@ export class BoardComponent implements OnInit {
         this.router.navigate(['home']).then(r => console.log('navigation done: ', r))
       }
     });
+  }
+
+  public buildBoard(title: string, description: string): BoardModel {
+    return {
+      id:0,
+      title:  title,
+      description:  description,
+      id_user:  this.user.id,
+      id_todolist:  []
+    }
+  }
+  /*****************************************************************\
+   *                        events handler
+   *****************************************************************/
+  public onCreateBoard() {
+    if(this.hasTitleAndDescription(this.boardTitle, this.boardDescription)){
+      console.log('title: ', this.boardTitle, this.boardDescription);
+      console.log('description: ', this.boardDescription)
+      this.createBoard();
+      this.hasBoard = true;
+    }
+  }
+
+  public onTitleChange(title: string): void {
+    this.titleCssClass = this.UTILS.setCssClass(this.isValidTitle(title));
+  }
+
+  public onDescriptionChange(description: string): void {
+    this.descriptionCssClass = this.UTILS.setCssClass(this.isValidDescription(description));
+  }
+
+  public isValidTitle(title: string): boolean {
+    return this.UTILS.isNotEmptyString(title);
+  }
+
+  public isValidDescription(description: string): boolean {
+    return this.UTILS.isNotEmptyString(description);
+  }
+
+  public hasTitleAndDescription(title: string, description: string): boolean {
+    return this.isValidTitle(title) && this.isValidDescription(description);
+  }
+
+  public createBoard(): void {
+    const board = this.buildBoard(this.boardTitle, this.boardDescription);
+    this.todolistService.createUserBoard(this.buildBoard(this.boardTitle, this.boardDescription))
+      .subscribe( board => {
+        this.board = board;
+        this.getUserTodolist(this.board.id_todolist);
+        this.storeService.setUserBoardId(this.board.id)
+     });
   }
 }

@@ -24,14 +24,51 @@
         My todo list
       </div>
       <div class="card">
-        <div class="card-body">
+
+        <!-- if user has board-->
+        <div  *ngIf="hasBoard" class="card-body">
           <h5 class="card-title">Title : {{board.title}}</h5>
           <p class="card-text">description : {{board.description}}</p>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <a routerLink="/todolist" class="btn btn-info">go to my todo list board</a>
+              <a routerLink="/todolist" class="btn btn-info">go to my todo list</a>
             </li>
           </ul>
+        </div>
+        <!-- if user has not a board -->
+        <div  *ngIf="!hasBoard" class="card-body">
+          <form>
+            <div class="form-group row">
+              <label for="board-title" class="col-sm-4 col-form-label">Enter your board title</label>
+              <div class="col-sm-8">
+                <input
+                  type="text"
+                  name="boardTitle"
+                  [(ngModel)]="boardTitle"
+                  [class]="titleCssClass"
+                  id="board-title"
+                  (change)="onTitleChange(boardTitle)">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="board-description" class="col-sm-4 col-form-label">Enter a description for your board</label>
+              <div class="col-sm-8">
+                <input
+                  type="text"
+                  name="boardDescription"
+                  [class]="descriptionCssClass"
+                  [(ngModel)]="boardDescription"
+                  id="board-description"
+                  (change)="onDescriptionChange(boardDescription)">
+              </div>
+            </div>
+          </form>
+
+          <div class="row">
+            <div class="col-11 d-flex justify-content-center">
+              <button (click)="onCreateBoard()" class="btn btn-info">create my board</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

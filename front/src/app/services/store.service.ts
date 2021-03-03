@@ -64,4 +64,12 @@ export class StoreService {
   public setUser(user: UserModel) {
     this.userSource.next(user)
   }
+
+  public getUserBoardId(): number {
+    return this.userBoardId;
+  }
+
+  public setUserBoardId(id: number): void {
+    this.userBoardId = id;
+  }
 }

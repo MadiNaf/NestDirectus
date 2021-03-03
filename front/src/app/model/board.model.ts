@@ -1,4 +1,4 @@
-export class BoradModel {
+export class BoardModel {
   id: number = 0;
   title: string = "";
   description: string = "";
