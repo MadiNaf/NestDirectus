@@ -27,7 +27,7 @@ export class TodolistComponent implements OnInit {
       .subscribe(todolist => this.todolist = todolist);
   }
 
-  addTask(taskContent: string): void{
+  public addTask(taskContent: string): void{
     console.log('add')
     const task: TaskModel = {
       id: 0,
@@ -37,7 +37,8 @@ export class TodolistComponent implements OnInit {
       todo: true,
       doing: false,
       done: false,
-      userId: ''
+      userId: this.user.id,
+      boardId: this.storeService.userBoardId
     }
 
     this.newTaskContent = '';
@@ -53,7 +54,8 @@ export class TodolistComponent implements OnInit {
       todo: item.todo,
       doing: item.doing,
       done: item.done,
-      userId: item.userId
+      userId: item.userId,
+      boardId: item.boardId
     }
   }
 }

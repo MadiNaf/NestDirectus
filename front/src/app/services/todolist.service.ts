@@ -64,7 +64,7 @@ export class TodolistService {
       });
   }
 
-  public getBardByUserId(userId: string): Observable<any> {
+  public getBoardByUserId(userId: string): Observable<any> {
     return this.http.get(this.baseUrlApi + 'board/' + userId)
       .pipe( map( response => {
         return response
@@ -86,7 +86,8 @@ export class TodolistService {
       done: response.done,
       createdOn: response.createdOn,
       updatedOn: response.updatedOn,
-      userId: response.userId
+      userId: response.userId,
+      boardId: response.board
     }
   }
 }

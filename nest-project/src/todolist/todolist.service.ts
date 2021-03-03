@@ -4,13 +4,16 @@ import { TaskModel, QueryParams } from "../model/task.model";
 
 @Injectable()
 export class TodolistService {
+
+    public readonly TODOLIST_COLLECTION: string = 'todolist';
+
     async directusRead(table): Promise<any> {
         return await directus.items(table).read();
     }
 
     async getAllTasks(): Promise<Array<TaskModel>>{
         let todolist: Array<TaskModel> = new Array<TaskModel>();
-        await this.directusRead('todolist')
+        await this.directusRead(this.TODOLIST_COLLECTION)
             .then( value => {
                 value.data.forEach(item => {
                     todolist.push(this.buildTasks(item));
@@ -22,7 +25,7 @@ export class TodolistService {
     async createTask(task: TaskModel): Promise<TaskModel> {
         const payload = this.creaTasktPayload(task);
         let createdTask = new TaskModel();
-        await directus.items('todolist').create(payload)
+        await directus.items(this.TODOLIST_COLLECTION).create(payload)
             .then( value => {
                 createdTask = this.buildTasks(value.data);
             })
@@ -33,7 +36,7 @@ export class TodolistService {
     async editeTask(task: TaskModel, taskId: string): Promise<TaskModel> {
         const payload = this.creaTasktPayload(task);
         let updatedTask = new TaskModel()
-        await directus.items('todolist').update(parseInt(taskId), payload)
+        await directus.items(this.TODOLIST_COLLECTION).update(parseInt(taskId), payload)
             .then( value => {
                 updatedTask = this.buildTasks(value.data);
             })
@@ -79,7 +82,7 @@ export class TodolistService {
         })
 
         const query = { filter: { id: { _in: idsTab }   } };
-        await directus.items('todolist').read(query)
+        await directus.items(this.TODOLIST_COLLECTION).read(query)
             .then( response => {
                 response.data.forEach(task => {
                     taskModelTab.push(this.buildTasks(task));

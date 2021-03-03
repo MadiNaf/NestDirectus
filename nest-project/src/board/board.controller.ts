@@ -1,14 +1,19 @@
-import {Controller, Get, Param} from '@nestjs/common';
-import {BoardService} from './board.service';
-import {BoardModel} from "../model/board.model";
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { BoardService } from './board.service';
+import { BoardModel } from "../model/board.model";
 
 @Controller('board')
 export class BoardController {
 
-    constructor(private boardService: BoardService) {
-    }
+    constructor(private boardService: BoardService) {}
+
     @Get(':userId')
-getBoards(@Param('userId') userId: string): Promise<Array<BoardModel>> {
+    getBoards(@Param('userId') userId: string): Promise<Array<BoardModel>> {
         return this.boardService.getBoardByUserId(userId)
+    }
+
+    @Post('new')
+    createUserBoard(@Body() userBoard: BoardModel): void {
+        this.boardService.createBoard(userBoard);
     }
 }

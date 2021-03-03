@@ -14,9 +14,10 @@ export class UserService {
             user.role = '9f2ea142-b027-4d19-9a8e-5fc82175cc37'
             await directus.users.create(user)
                 .then(response => {
-                    retour = { email: response.data.email, password: '***'}
+                    console.log('----signup_res----: ', response)
+                    retour = { email: user.email, password: '***'}
                 })
-                .catch(error => console.log('sign up err: ', error))
+                .catch(error => console.log('----sign up err----: ', error))
         }
         return retour;
     }

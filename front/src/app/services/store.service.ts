@@ -13,6 +13,7 @@ import { UtilsTool } from "../utils/utils-tool";
 export class StoreService {
 
   public readonly UTILS: UtilsTool = new UtilsTool();
+  public userBoardId: number = 0;
 
   public userSource = new BehaviorSubject(new UserModel());
   currentUser = this.userSource.asObservable();

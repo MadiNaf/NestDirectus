@@ -7,4 +7,5 @@ export class TaskModel {
   doing: boolean = false;
   done: boolean = false;
   userId: string = "";
+  boardId: number = 0;
 }

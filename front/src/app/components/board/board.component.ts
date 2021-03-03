@@ -25,7 +25,7 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.hasSession();
     this.storeService.currentUser.subscribe( response => this.user = response)
-    this.todolistService.getBardByUserId(this.user.id).subscribe(value => {
+    this.todolistService.getBoardByUserId(this.user.id).subscribe(value => {
       value.forEach((board: BoradModel) => this.board = board);
       this.getUserTodolist(this.board.id_todolist);
     })
