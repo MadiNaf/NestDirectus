@@ -22,19 +22,15 @@ export class BoardService {
         return listBoard;
     }
 
-    public async createBoard(userBoard: BoardModel) {
+    public async createBoard(userBoard: BoardModel): Promise<BoardModel> {
+        let retour: BoardModel = new BoardModel();
         await directus.items(this.BOARD_COLLECTION).create(userBoard)
-            .then(response => console.log('resp: ', response))
+            .then(response => {
+                console.log('resp: ', response)
+                retour = response.data
+            })
             .catch(error => console.log('err: ', error));
-    }
 
-    public buildBoard(board: BoardModel): BoardModel {
-        return {
-            id: 0,
-            description: board.description,
-            title: board.title,
-            id_user: board.id_user,
-            id_todolist: board.id_todolist,
-        }
+        return retour;
     }
 }

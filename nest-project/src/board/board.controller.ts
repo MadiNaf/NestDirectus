@@ -13,7 +13,7 @@ export class BoardController {
     }
 
     @Post('new')
-    createUserBoard(@Body() userBoard: BoardModel): void {
-        this.boardService.createBoard(userBoard);
+    createUserBoard(@Body() userBoard: BoardModel): Promise<BoardModel> {
+        return this.boardService.createBoard(userBoard);
     }
 }
