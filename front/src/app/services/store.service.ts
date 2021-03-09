@@ -44,12 +44,24 @@ export class StoreService {
       }));
   }
 
-  public logOut(task: TaskModel): void {
-    this.http.post(this.baseUrlApi + '', task)
+  public logOut(logins: LoginsModel): void {
+    this.http.post(this.baseUrlApi + '', logins)
       .subscribe((response: any) => {
         console.log('post_res: ', response);
       });
   }
+
+  public addUserAvatar(userAvatar: File): Observable<any>{
+    const formData: FormData = new FormData();
+    formData.append('file', userAvatar, userAvatar.name );
+    return this.http.post(this.baseUrlApi + 'upload', formData)
+      .pipe( map( response => {
+        return response;
+      }))
+  }
+
+  public getUserAvatarById(avatarId: string): void{}
+
 /*****************************************************************\
  *                  getter and setter
  *****************************************************************/
