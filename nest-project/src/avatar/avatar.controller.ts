@@ -11,8 +11,11 @@ export class AvatarController {
     }
 
     @Post('upload/:id')
-    @UseInterceptors(FileInterceptor('file'))
-    uploadAvatar(@UploadedFile() file: Express.Multer.File, @Param('id') id: string): AvatarModel {
+    @UseInterceptors(
+        FileInterceptor('file', {
+        dest: '../directus-project/uploads/'
+    }))
+    uploadAvatar(@UploadedFile() file: Express.Multer.File, @Param('id') id: string): any {
         return this.avatarService.uploadAvatar(file, id);
     }
 
@@ -20,5 +23,7 @@ export class AvatarController {
     getUserAvatar(@Param('id') id: string): Promise<any> {
         return this.avatarService.getUserAvatarById(id);
     }
+
+
 
 }

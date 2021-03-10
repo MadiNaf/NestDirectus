@@ -1,24 +1,13 @@
 export class AvatarModel {
-    id: string;
-    storage?: string = 'local';
-    title: string;
-    type: string;
-    filesize: number;
-
-    destination?: string;
-    path?: string; // /directus-project/uploads/filename_disk
-    folder?: string;
-    width?: number;
-    height?: number;
-    filename_disk?: string
-    filename_download?: string // title.lowercase without extention
-    uploaded_by: string;
-    uploaded_on?: string;
-    /*
-
-
-
-
-
-     */
+    /*The key name*/
+    public fieldname: string;
+    public originalname: string;
+    public encoding: string;
+    public mimetype: string;
+    public readonly destination?: string = "../directus-project/uploads/";
+    /* File name in the destination */
+    public filename: string;
+    public path: string;
+    public size: number;
+    public errors?: Array<any> = [];
 }

@@ -96,16 +96,6 @@ export class UserService {
         }
     }
 
-  /*  async directusAuth(): Promise<any> {
-        await directus.auth.login({email: 'madi@dev.fr', password: 'M@d!976'})
-            .then( response => {
-                console.log('auth: ', response.data)
-            })
-            .catch( error => {
-                console.log('err auth dtcs: ', error)
-            })
-    }*/
-
     async getUserByEmail(email: string): Promise<Object>{
         const query = { filter: { email: {_eq: email} }};
         return await directus.users.read(query)
