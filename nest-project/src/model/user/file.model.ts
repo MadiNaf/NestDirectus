@@ -1,5 +1,5 @@
 import {MetadataModel} from './file/metadata.model';
-import {Readable} from "stream";
+import {Readable} from 'stream';
 
 export class FileModel {
     public readonly id?: string = '';

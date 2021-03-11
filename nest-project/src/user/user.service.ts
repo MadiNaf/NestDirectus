@@ -6,7 +6,6 @@ import { LoginModel } from "../model/user/login.model";
 
 @Injectable()
 export class UserService {
-
     public async signUp(user: UserModel): Promise<LoginModel> {
         let retour: LoginModel = new LoginModel();
         if(this.isValidUser(user)) {
@@ -21,7 +20,6 @@ export class UserService {
         }
         return retour;
     }
-
     public async signIn(loginModel: LoginModel): Promise<UserModel> {
         let user: UserModel = new UserModel();
 
@@ -54,12 +52,28 @@ export class UserService {
         }
     }
 
-    public editUser(user: UserModel): void {
-        if(this.isValidUser(user)) {
-            directus.users.update({email: user.email, password: user.password})
-                .then(response => console.log('response: ', response))
+    public async editUser(user: UserModel, userId: string): Promise<UserModel> {
+        let retour: UserModel = new UserModel();
+
+        if(this.isSameUserId(user.id, userId)) {
+            await directus.users.update(user)
+                .then(response => {retour = response.data})
                 .catch(error => console.log('edit user err: ', error))
         }
+        return retour;
+    }
+
+    public async editUserAvatar(user: UserModel, userId: string): Promise<UserModel> {
+        let retour: UserModel = new UserModel();
+
+        if(this.isNotEmpty(userId) && this.isNotEmpty(user.avatar)) {
+            const payload = { avatar: user.avatar };
+            const query = { filter: { id: { _iq: userId }   } };
+            await directus.users.update(userId, payload, query)
+                .then(response => {retour = response.data})
+                .catch(error => console.log('edit user err: ', error))
+        }
+        return retour;
     }
 
     public requestPasswordReset(userLogin: LoginModel): void {
@@ -75,7 +89,6 @@ export class UserService {
     }
 
     public isValidUser(loginModel: LoginModel): boolean{
-        console.log('is valid: ', loginModel)
         return !!(loginModel.email && loginModel.password);
     }
 
@@ -99,6 +112,15 @@ export class UserService {
     async getUserByEmail(email: string): Promise<Object>{
         const query = { filter: { email: {_eq: email} }};
         return await directus.users.read(query)
+    }
+
+    public isSameUserId(idToCompare: string, userId): boolean{
+        console.log(idToCompare + ' ' + userId)
+        return idToCompare === userId;
+    }
+
+    public isNotEmpty(str: string): boolean {
+        return str != '';
     }
 
     /**

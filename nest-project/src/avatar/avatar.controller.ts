@@ -15,7 +15,7 @@ export class AvatarController {
         FileInterceptor('file', {
         dest: '../directus-project/uploads/'
     }))
-    uploadAvatar(@UploadedFile() file: Express.Multer.File, @Param('id') id: string): any {
+    uploadAvatar(@UploadedFile() file: Express.Multer.File, @Param('id') id: string): Promise<AvatarModel> {
         return this.avatarService.uploadAvatar(file, id);
     }
 

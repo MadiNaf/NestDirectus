@@ -1,5 +1,6 @@
 export class AvatarModel {
     /*The key name*/
+    public id: string;
     public fieldname: string;
     public originalname: string;
     public encoding: string;

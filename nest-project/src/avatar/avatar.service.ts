@@ -11,26 +11,16 @@ const FormData = require('form-data');
 @Injectable()
 export class AvatarService {
 
-    public async uploadAvatar(file: Express.Multer.File, userId: string): Promise<any> {
-        let user: UserModel = new UserModel();
-        let rt : any;
+    public async uploadAvatar(file: Express.Multer.File, userId: string): Promise<AvatarModel> {
+        let avatar: AvatarModel = new AvatarModel();
         await directus.files.create(this.transformToFileModel(file, userId))
             .then( response => {
-                // avatar = this.transformToAvatarModel(response);
-                console.log(response);
                 if(response.data.id.length) {
-                    console.log(response);
-                    rt = response.data;
-
-                    // update user avatar
-                    const payload = {avatar: response.data.id}
-                    directus.users.update(payload)
-                        .then( res => { user = res.data})
-                        .catch(error => { console.log('SET_USER_AVATAR_ER: ', error)})
+                    avatar = this.transformToAvatarModel(response.data);
                 }
             })
-            .catch( error => { rt = error });
-        return user;
+            .catch( error => { avatar.errors.push(error) });
+        return avatar;
     }
 
     public getUserAvatarById(imageId: string): Promise<any>{
@@ -44,13 +34,14 @@ export class AvatarService {
     }
 
 
-/*    transformToAvatarModel(diretusFile: FileModel): AvatarModel{
+    transformToAvatarModel(directusFile: FileModel): AvatarModel{
         let avatar: AvatarModel = new AvatarModel();
-        avatar.mimetype = diretusFile.type;
-        avatar.originalname = diretusFile.filename_download;
-        avatar.filename = diretusFile.filename_disk;
+        avatar.id = directusFile.id
+        avatar.mimetype = directusFile.type;
+        avatar.originalname = directusFile.filename_download;
+        avatar.filename = directusFile.filename_disk;
         return avatar;
-    }*/
+    }
 
     public transformToFileModel(file: Express.Multer.File, userId: string): FileModel {
         let retour: FileModel = new FileModel();
