@@ -34,7 +34,7 @@ export class AvatarService {
     }
 
 
-    transformToAvatarModel(directusFile: FileModel): AvatarModel{
+    public transformToAvatarModel(directusFile: FileModel): AvatarModel{
         let avatar: AvatarModel = new AvatarModel();
         avatar.id = directusFile.id
         avatar.mimetype = directusFile.type;
