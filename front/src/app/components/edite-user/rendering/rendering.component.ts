@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {UserModel} from '../../../model/user.model';
 
 @Component({
   selector: 'app-rendering',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RenderingComponent implements OnInit {
 
+  @Input()
+  public currentUser: UserModel = new UserModel();
+
+  public readonly DEFAULT_AVATAR: string = '../../../../assets/img/default-avatar.png';
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  public getUserAvatar(): string {
+    return this.currentUser.avatar ? this.currentUser.avatar : this.DEFAULT_AVATAR;
+  }
 }

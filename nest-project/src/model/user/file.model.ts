@@ -15,7 +15,7 @@ export class FileModel {
     public description: string;
     public location: string;
     public duration: string;
-    public tags: string;
+    public tags?: string;
     public filesize: number;
 
     public uploaded_by: string;

@@ -51,16 +51,26 @@ export class StoreService {
       });
   }
 
-  public addUserAvatar(userAvatar: File): Observable<any>{
+  public updateUserAvatar(userAvatar: File, currentUser: UserModel): Observable<any>{
     const formData: FormData = new FormData();
     formData.append('file', userAvatar, userAvatar.name );
-    return this.http.post(this.baseUrlApi + 'upload', formData)
+    return this.http.post(`${this.baseUrlApi}user/edit/avatar${currentUser.id}`, formData)
       .pipe( map( response => {
         return response;
       }))
   }
 
-  public getUserAvatarById(avatarId: string): void{}
+  public uploadAvatar(userAvatar: File, userId: string): Observable<any>{
+    const formData: FormData = new FormData();
+    formData.append('file', userAvatar, userAvatar.name );
+    return this.http.post(`${this.baseUrlApi}avatar/upload${userId}`, formData)
+      .pipe( map( response => { return response; }))
+  }
+
+  public getUserAvatarById(avatarId: string): Observable<any>{
+    return this.http.get(`${this.baseUrlApi}avatar/${avatarId}`)
+      .pipe( map( response => { return response; }))
+  }
 
 /*****************************************************************\
  *                  getter and setter

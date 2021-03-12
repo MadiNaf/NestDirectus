@@ -1,33 +1,107 @@
-<div class="container">
+<div class="container mt-5">
+  <!-- Editor section -->
   <div class="row">
     <div class="col-6">
-      <form>
-        <div class="form-group">
-          <label for="avatar">Update your avatar</label>
-          <input type="file" class="form-control-file" id="avatar" (change)="onChangeUserAvatar($event)">
-        </div>
-        <div class="form-group">
-          <label for="firstname">Edit your first name</label>
-          <input type="text" class="form-control" id="firstname">
-        </div>
-        <div class="form-group">
-          <label for="lastname">Edit your last name</label>
-          <input type="text" class="form-control" id="lastname">
-        </div>
-        <div class="form-group">
-          <label for="email">Edit your email</label>
-          <input type="email" class="form-control" id="email">
-        </div>
 
-        <div class="form-group">
-          <label for="description">Edit your description</label>
-          <textarea class="form-control" id="description" rows="3"></textarea>
+      <!-- Card section -->
+      <div class="card shadow-sm">
+        <div class="card-body">
+
+          <!-- Form section -->
+          <form>
+            <!-- Input avatar -->
+            <div class="form-group">
+              <label for="avatar">Update your avatar</label>
+              <input
+                type="file"
+                class="form-control-file"
+                id="avatar"
+                (change)="onChangeUserAvatar($event)">
+            </div>
+
+            <!-- Input first name -->
+            <div class="form-group">
+              <label for="firstname">Edit your first name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="firstname"
+                name="first_name"
+                [(ngModel)]="currentUser.first_name"
+                (change)="onChangeFirstname(currentUser.first_name)"
+              >
+            </div>
+
+            <!-- Input last name -->
+            <div class="form-group">
+              <label for="lastname">Edit your last name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lastname"
+                name="last_name"
+                [(ngModel)]="currentUser.last_name"
+                (change)="onChangeLastName(currentUser.last_name)"
+              >
+            </div>
+
+            <!-- Input email -->
+            <div class="form-group">
+              <label for="email">Edit your email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                [(ngModel)]="currentUser.email"
+                (change)="onChangeEmail(currentUser.email)"
+              >
+            </div>
+
+            <!-- Input title -->
+            <div class="form-group">
+              <label for="title">Edit your title here</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                [(ngModel)]="currentUser.title"
+                (change)="onChangeTitle(currentUser.title)"
+              >
+            </div>
+
+            <!-- Input description -->
+            <div class="form-group">
+              <label for="description">Edit your description</label>
+              <textarea
+                class="form-control"
+                id="description"
+                rows="3"
+                name="description"
+                [(ngModel)]="currentUser.description"
+                (change)="onChangeDescription(currentUser.description)"
+              >
+                {{currentUser.description}}
+              </textarea>
+            </div>
+          </form>
+
+          <!-- Button group -->
+          <div class="row">
+            <div class="col-6">
+              <button class="btn btn-info" (click)="getFile()">save all fields</button>
+            </div>
+            <div class="col-6"><button class="btn btn-info" (click)="getFile()">update avatar</button></div>
+          </div>
+
         </div>
-      </form>
-      <button class="btn btn-info" (click)="getFile()">Submit</button>
-    </div>
+        </div>
+      </div>
+
+    <!-- Rendering section -->
     <div class="col-6">
-      <app-rendering></app-rendering>
+      <app-rendering [currentUser]="currentUser"></app-rendering>
     </div>
   </div>
 </div>

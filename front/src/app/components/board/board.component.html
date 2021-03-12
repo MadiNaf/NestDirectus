@@ -4,14 +4,36 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          My profile
+          <div class="row d-flex justify-content-between">
+            <div class="col-6">f{{user.title}}</div>
+            <div class="col-6">
+              <button class="btn btn-info" routerLink="/edit/profile">Edit my profile</button>
+            </div>
+          </div>
         </div>
 
         <div class="card-body">
-          <h5 class="card-title">First name : {{user.first_name}}</h5>
-          <p class="card-text">Last name : {{user.last_name}}</p>
-          <p class="card-text">Email : {{user.email}}</p>
-          <p class="card-text">Language: {{user.language}}</p>
+          <div class="row d-flex justify-content-between">
+            <div class="col-6">
+              <img [src]="userAvatar" alt="user-avatar" class="rounded-circle user-avatar">
+            </div>
+            <div class="col-6 d-flex align-items-center ">
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="card-title d-inline-flex">{{user.first_name}} {{user.last_name}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{user.email}} </h6>
+                  <p class="card-text">Language: {{user.language}}</p>
+                  <p class="card-text">Location: {{user.location}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-12 mr-3">
+              <p class="card-text"> {{user.description}} </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

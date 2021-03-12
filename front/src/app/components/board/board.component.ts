@@ -6,7 +6,7 @@ import { BoardModel } from '../../model/board.model';
 import { TaskModel } from '../../model/task.model';
 import { Router } from '@angular/router';
 import { UtilsTool } from '../../utils/utils-tool';
-
+import {DirectusFileModel} from '../../model/directus-file.model';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -16,11 +16,14 @@ export class BoardComponent implements OnInit {
 
   public readonly UTILS: UtilsTool = new UtilsTool();
   public readonly DEFAULT_CLASS: string = 'form-control';
+  public readonly DEFAULT_AVATAR: string = '../../../../assets/img/default-avatar.png';
+  public readonly AVATAR_DESTINATION: string = '../../directus-project/uploads/';
 
   public user: UserModel = new UserModel();
   public board: BoardModel = new BoardModel();
   public userTodolist: Array<TaskModel> = new Array<TaskModel>();
   public hasBoard: boolean = false;
+  public userAvatar: string = '../directus-project/uploads/';
 
   public boardTitle: string = '';
   public boardDescription: string = '';
@@ -45,7 +48,8 @@ export class BoardComponent implements OnInit {
         this.hasBoard = false;
       }
 
-    })
+    });
+    this.getUserAvatar()
   }
 
   public getUserTodolist(idsTodolist: Array<number>): void {
@@ -70,6 +74,19 @@ export class BoardComponent implements OnInit {
       description:  description,
       id_user:  this.user.id,
       id_todolist:  []
+    }
+  }
+
+  public getUserAvatar(): void {
+    this.userAvatar = this.user.avatar ? this.user.avatar : this.DEFAULT_AVATAR;
+    if (this.userAvatar != this.DEFAULT_AVATAR) {
+      this.storeService.getUserAvatarById(this.userAvatar)
+        .subscribe( file => {
+          file.data.forEach((image: DirectusFileModel) => {
+            this.userAvatar = this.AVATAR_DESTINATION + this.buildFile(image.filename_disk, image.filename_download);
+            console.log('avatar: ', this.userAvatar)
+          })
+        })
     }
   }
   /*****************************************************************\
@@ -112,5 +129,14 @@ export class BoardComponent implements OnInit {
         this.getUserTodolist(this.board.id_todolist);
         this.storeService.setUserBoardId(this.board.id)
      });
+  }
+
+  public buildFile(fileNameDisk: string, fileNameDownload: string){
+    return fileNameDisk + '.' + this.getFileExtension(fileNameDownload);
+  }
+
+  public getFileExtension(fileNameDownload: string): string {
+    const typeArray = fileNameDownload.split('.');
+    return typeArray[typeArray.length - 1];
   }
 }

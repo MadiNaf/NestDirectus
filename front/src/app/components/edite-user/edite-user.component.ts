@@ -10,7 +10,7 @@ import {UserModel} from '../../model/user.model';
 export class EditeUserComponent implements OnInit {
 
   public uploadedAvatar: File | null = null;
-  public user: UserModel = new UserModel();
+  public currentUser: UserModel = new UserModel();
 
   constructor(private sotreService: StoreService) { }
 
@@ -18,6 +18,9 @@ export class EditeUserComponent implements OnInit {
     this.getCurrentUser();
   }
 
+  /****************************************************\
+   *                event handler                     *
+  \****************************************************/
   public onChangeUserAvatar(event: Event): void {
     const files: FileList | null = (event.target as HTMLInputElement).files
 
@@ -27,19 +30,35 @@ export class EditeUserComponent implements OnInit {
     console.log('file: ', this.uploadedAvatar)
   }
 
-  public updateAvatar(): void {
-   this.sotreService.addUserAvatar(this.uploadedAvatar as File)
-      .subscribe( data => {
-        console.log('data: ')
-      },
-          error => {console.log('error: ', error)})
-  }
+  public onChangeFirstname(firstname: string): void {}
 
-  public getCurrentUser(): void {
-    this.sotreService.currentUser.subscribe( user => this.user =  user);
-  }
+  public onChangeLastName(lastname: string): void{}
+
+  public onChangeEmail(email: string): void {}
+
+  public onChangeTitle(title: string): void {}
+
+  public onChangeDescription(description: string): void {}
 
   getFile(){
     console.log('file: ', this.uploadedAvatar);
+  }
+
+  /****************************************************\
+   *                service call                      *
+  \****************************************************/
+
+  public uploadAvatar(): void {
+    this.sotreService.uploadAvatar(this.uploadedAvatar as File, this.currentUser.id)
+      .subscribe( data => {
+          console.log('data: ')
+        },
+        error => {console.log('error: ', error)})
+  }
+
+  public updateUserAvatar(): void {}
+
+  public getCurrentUser(): void {
+    this.sotreService.currentUser.subscribe( user => this.currentUser =  user);
   }
 }

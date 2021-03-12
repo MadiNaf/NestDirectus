@@ -1,4 +1,27 @@
-<div class="row d-flex justify-content-center">
-    <img src="../../../../assets/img/default-avatar.png" alt="user-avatar" class="rounded-circle user-avatar">
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="row d-flex justify-content-between">
+      <div class="col-6">
+        <img [src]="getUserAvatar()" alt="user-avatar" class="rounded-circle user-avatar">
+      </div>
+      <div class="col-6 d-flex align-items-center ">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="card-title d-inline-flex">{{currentUser.first_name}} {{currentUser.last_name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              {{currentUser.email}}
+            </h6>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <p class="card-text">Title: {{currentUser.title}}</p>
+      <p class="card-text">Description: {{currentUser.description}}</p>
+    </div>
+  </div>
 </div>
+
 
