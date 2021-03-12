@@ -4,9 +4,6 @@ import { AvatarModel } from '../model/user/avatar.model';
 import { directus } from '../main';
 import { FileModel } from '../model/user/file.model';
 import { MetadataModel } from '../model/user/file/metadata.model';
-import { UserModel } from '../model/user/user.model';
-
-const FormData = require('form-data');
 
 @Injectable()
 export class AvatarService {
@@ -51,5 +48,4 @@ export class AvatarService {
     public emptyMetada(): MetadataModel{
         return new MetadataModel();
     }
-
 }
