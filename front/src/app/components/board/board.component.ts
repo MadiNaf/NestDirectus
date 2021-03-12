@@ -7,6 +7,7 @@ import { TaskModel } from '../../model/task.model';
 import { Router } from '@angular/router';
 import { UtilsTool } from '../../utils/utils-tool';
 import {DirectusFileModel} from '../../model/directus-file.model';
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -83,7 +84,7 @@ export class BoardComponent implements OnInit {
       this.storeService.getUserAvatarById(this.userAvatar)
         .subscribe( file => {
           file.data.forEach((image: DirectusFileModel) => {
-            this.userAvatar = this.AVATAR_DESTINATION + this.buildFile(image.filename_disk, image.filename_download);
+            this.userAvatar = this.buildFullPathFile(image.filename_disk);
             console.log('avatar: ', this.userAvatar)
           })
         })
@@ -131,12 +132,7 @@ export class BoardComponent implements OnInit {
      });
   }
 
-  public buildFile(fileNameDisk: string, fileNameDownload: string){
-    return fileNameDisk + '.' + this.getFileExtension(fileNameDownload);
-  }
-
-  public getFileExtension(fileNameDownload: string): string {
-    const typeArray = fileNameDownload.split('.');
-    return typeArray[typeArray.length - 1];
+  public buildFullPathFile(fileNameDisk: string){
+    return this.AVATAR_DESTINATION + fileNameDisk;
   }
 }
