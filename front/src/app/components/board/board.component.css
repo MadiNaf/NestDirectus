@@ -1,3 +1,13 @@
 .user-avatar {
+  object-fit: cover;
+  overflow: hidden;
   width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.avatar-container {
+  background-color: #FDFEFE;
+  width: 200px;
+  height: 200px;
 }

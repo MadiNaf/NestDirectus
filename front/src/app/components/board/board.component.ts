@@ -18,7 +18,7 @@ export class BoardComponent implements OnInit {
   public readonly UTILS: UtilsTool = new UtilsTool();
   public readonly DEFAULT_CLASS: string = 'form-control';
   public readonly DEFAULT_AVATAR: string = '../../../../assets/img/default-avatar.png';
-  public readonly AVATAR_DESTINATION: string = '../../directus-project/uploads/';
+  public readonly AVATAR_DESTINATION: string = 'http://localhost:3000/';
 
   public user: UserModel = new UserModel();
   public board: BoardModel = new BoardModel();
@@ -84,8 +84,9 @@ export class BoardComponent implements OnInit {
       this.storeService.getUserAvatarById(this.userAvatar)
         .subscribe( file => {
           file.data.forEach((image: DirectusFileModel) => {
-            this.userAvatar = this.buildFullPathFile(image.filename_disk);
-            console.log('avatar: ', this.userAvatar)
+            this.saveFullPathFile(image.filename_disk);
+            this.userAvatar = this.storeService.getUserAvatar();
+            console.log('avatar: ', this.userAvatar);
           })
         })
     }
@@ -132,7 +133,7 @@ export class BoardComponent implements OnInit {
      });
   }
 
-  public buildFullPathFile(fileNameDisk: string){
-    return this.AVATAR_DESTINATION + fileNameDisk;
+  public saveFullPathFile(fileNameDisk: string): void{
+    this.storeService.setUserAvatar(this.AVATAR_DESTINATION + fileNameDisk)
   }
 }

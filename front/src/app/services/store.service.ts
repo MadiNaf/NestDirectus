@@ -18,6 +18,8 @@ export class StoreService {
   public userSource = new BehaviorSubject(new UserModel());
   currentUser = this.userSource.asObservable();
 
+  private _userAvatar = ''
+
   public sessionSource = new BehaviorSubject(false);
   currentSession = this.sessionSource.asObservable();
 
@@ -93,5 +95,13 @@ export class StoreService {
 
   public setUserBoardId(id: number): void {
     this.userBoardId = id;
+  }
+
+  getUserAvatar(): string {
+    return this._userAvatar;
+  }
+
+  setUserAvatar(value: string): void{
+    this._userAvatar = value;
   }
 }

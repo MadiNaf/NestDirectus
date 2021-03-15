@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
           <div class="row d-flex justify-content-between">
-            <div class="col-6">f{{user.title}}</div>
+            <div class="col-6">{{user.title}}</div>
             <div class="col-6">
               <button class="btn btn-info" routerLink="/edit/profile">Edit my profile</button>
             </div>
@@ -14,7 +14,9 @@
         <div class="card-body">
           <div class="row d-flex justify-content-between">
             <div class="col-6">
-              <img [src]="userAvatar" alt="user-avatar" class="rounded-circle user-avatar">
+              <div class="avatar-container">
+                <img [src]="userAvatar" alt="user-avatar" class="user-avatar">
+              </div>
             </div>
             <div class="col-6 d-flex align-items-center ">
               <div class="row">
